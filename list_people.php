@@ -1,24 +1,32 @@
 <?php
-$servername = "localhost";
-$username = "cpe0597";
-$password = "@@##&&Pj240502";
-$db_name = "cpe0597";
+require("connect_db.php");
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $db_name);
-
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
-
-$sql = "SELECT id, fname, lname FROM survey";
+$sql = "SELECT id, fname, lname, age, sex, marry_status FROM survey";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
   // output data of each row
   while($row = $result->fetch_assoc()) {
-    echo "id: " . $row["id"]. " - Name: " . $row["fname"]. " " . $row["lname"]. "<br>";
+    if($row["sex"]=="M"){
+        if($row["age"]>=15){
+            echo "นาย".$row["fname"]." ".$row["lname"]." <a href='edit_people.php?id=".$row["id"]."'>Edit</a><br>";
+        }
+        else{
+            echo "ด.ช.".$row["fname"]." ".$row["lname"]." <a href='edit_people.php?id=".$row["id"]."'>Edit</a><br>";
+        }
+    }else{
+        if($row["age"]>=15){
+            if($row["marry_status"]=="M"){
+                echo "นาง".$row["fname"]." ".$row["lname"]." <a href='edit_people.php?id=".$row["id"]."'>Edit</a><br>";
+            }else{
+                echo "น.ส.".$row["fname"]." ".$row["lname"]." <a href='edit_people.php?id=".$row["id"]."'>Edit</a><br>";
+            }
+           
+        }
+        else{
+            echo "ด.ญ.".$row["fname"]." ".$row["lname"]." <a href='edit_people.php?id=".$row["id"]."'>Edit</a><br>";
+        }
+    }
   }
 } else {
   echo "0 results";

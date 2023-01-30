@@ -9,6 +9,7 @@ if($result->num_rows > 0){
     $row = $result->fetch_assoc();
 ?>
 <form action="save_edit_people.php" method="post">
+    <input type="hiden" name="id" value="<?php print($row["id"]); ?>"><br>
     First Name:<input type="text" name="fname" value="<?php print($row["fname"]); ?>"><br>
     Last Name:<input type="text" name="lname" value="<?php print($row["lname"]); ?>"><br>
     Age:<input type="text" name="age" value="<?php print($row["age"]); ?>"><br>
